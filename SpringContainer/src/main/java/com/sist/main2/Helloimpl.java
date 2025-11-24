@@ -1,0 +1,9 @@
+package com.sist.main2;
+
+public class Helloimpl implements Hello{
+	@Override
+	public void sayHello(String name) {
+		// TODO Auto-generated method stub
+		System.out.println(name+"님 환영합니다.");
+	}
+}
