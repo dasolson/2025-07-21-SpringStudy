@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="../js/pagecard.js"></script>
 <style type="text/css">
 .rwo {
 	margin: 0px auto;
@@ -39,11 +40,7 @@ p {
 		  </div>
 		</div>
 		<div class="row text-center" style="margin-top: 10px">
-			<ul class="pagination">
-				<li v-if="startPage>1"><a class="a-link" @click="prev(startPage-1)">&lt;</a></li>
-				<li v-for="i in range(startPage, endPage)" :class="i == curpage?'active':''"><a class="a-link" @click="pageChange(i)">{{i}}</a></li>
-				<li v-if="endPage<totalpage"><a class="a-link" @click="next(endPage+1)">&gt;</a></li>
-			</ul>
+			<pagecard></pagecard>
 		</div>
 	</div>
 	<script type="importmap">
@@ -117,6 +114,9 @@ p {
 					this.curpage = 1
 					this.dataRecv()
 				}
+			},
+			components : {
+				'pagecard' : pagecard
 			}
 		})
 		app.mount("#food_list")

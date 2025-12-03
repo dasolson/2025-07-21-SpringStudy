@@ -1,6 +1,7 @@
 package com.sist.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.*;
@@ -26,6 +27,7 @@ import com.sist.vo.*;
 
 // 실제 데이터 전송
 @RestController
+@CrossOrigin(origins = "*") // 모든 포트 허용   vue:8081 / react:3000
 public class FoodRestController {
 	// 스프링에 등록된 클래스중에 필요한 클래스 가져오기 @Autowired
 	@Autowired
@@ -37,7 +39,7 @@ public class FoodRestController {
 		Map map = new HashMap();
 		final int ROWSIZE = 12;
 		int start = (ROWSIZE*page)-(ROWSIZE-1);
-		int end = (ROWSIZE*page);
+		int end = ROWSIZE*page;
 		List<FoodVO> list = fService.foodListData(start, end);
 		int totalpage = fService.foodTotalPage();
 		
@@ -105,6 +107,42 @@ public class FoodRestController {
 		map.put("startPage", startPage);
 		map.put("endPage", endPage);
 		map.put("address", address);
+		
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			result = mapper.writeValueAsString(map);
+		} catch (Exception e) {}
+		
+		return result;
+	}
+	
+	@GetMapping(value ="food/type_vue.do", produces = "text/plain;charset=UTF-8")
+	public String food_type(int page, String type) {
+		String result = "";
+		
+		Map map = new HashMap();
+		final int ROWSIZE = 12;
+		int start = (ROWSIZE*page)-(ROWSIZE-1);
+		int end = (ROWSIZE*page);
+		map.put("start", start);
+		map.put("end", end);
+		map.put("type", type);
+		List<FoodVO> list = fService.foodtypeData(map);
+		int totalpage = fService.foodTypeTotalPage(type);
+		
+		//블록별
+		final int BLOCK = 10;
+		int startPage = ((page-1)/BLOCK*BLOCK)+1;
+		int endPage = ((page-1)/BLOCK*BLOCK)+BLOCK;
+		if(endPage > totalpage)
+			endPage = totalpage;
+		
+		// 자바스크립트로 전송
+		map.put("list", list);
+		map.put("curpage", page);
+		map.put("totalpage", totalpage);
+		map.put("startPage", startPage);
+		map.put("endPage", endPage);		
 		
 		try {
 			ObjectMapper mapper = new ObjectMapper();
