@@ -10,10 +10,11 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">SpringMVC</a>
+      <a class="navbar-brand" href="../main/main.do">SpringMVC</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
+      <li class="active"><a href="../main/main.do">Home</a></li>
+      <li><a href="../member/join.do">회원가입</a></li>
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">맛집
         <span class="caret"></span></a>
@@ -46,5 +47,16 @@
     </ul>
   </div>
 </nav>
+<div class="container">
+	<div class="row text-right">
+		ID : <input type="text" ref="id" size="15" class="input-sm">
+		&nbsp;
+		PW : <input type="password" ref="pwd" size="15" class="input-sm">
+		&nbsp;
+		자동 로그인 : <input type="checkbox" id="remember-me">
+		<button class="btn btn-sm btn-primary">로그인</button>		
+	</div>
+</div>
+<div style="height: 10px"></div>
 </body>
 </html>
